@@ -12,17 +12,25 @@
 #define kPaddingBetweenViews 10
 #define kPaddingImageView 5
 
+static NSBundle *(^ BundleBlock)(void) = ^(void) { return [NSBundle mainBundle]; };
 static NSString* (^ CustomLocalizationBlock)(NSString *localization) = nil;
 
 NSBundle *STNotificationBundle(void) {
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString* path = [NSBundle.mainBundle.resourcePath stringByAppendingPathComponent:kSTNotificationBundleName];
+        NSBundle *bundle = BundleBlock();
+        NSString* path = [bundle.resourcePath stringByAppendingPathComponent:kSTNotificationBundleName];
         bundle = [NSBundle bundleWithPath:path];
     });
     return bundle;
 }
+
+
+void STNotificationDefaulBundleBlock(NSBundle *(^bundleBlock)(void)) {
+    BundleBlock = bundleBlock;
+}
+
 
 void STNotificationCustomLocalizationBlock(NSString *(^customLocalizationBlock)(NSString *stringToLocalize)){
     CustomLocalizationBlock = customLocalizationBlock;

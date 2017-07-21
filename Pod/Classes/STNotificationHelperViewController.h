@@ -6,6 +6,7 @@
 #import <UIKit/UIKit.h>
 
 extern NSBundle *STNotificationBundle(void);
+extern void STNotificationDefaulBundleBlock(NSBundle *(^bundleBlock)(void));
 extern void STNotificationCustomLocalizationBlock(NSString *(^customLocalizationBlock)(NSString *stringToLocalize));
 extern NSString *STNotificationLocalizedString(NSString *localizeString);
 
