@@ -566,11 +566,22 @@ NSString *STNotificationLocalizedString(NSString *localizeString)
 -(void)goToSettings{
     NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
     [[UIApplication sharedApplication] openURL:url];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (self.onDismiss) {
+        self.onDismiss();
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(void)exitButtonAction{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.onDismiss) {
+        self.onDismiss();
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 -(NSUInteger)supportedInterfaceOrientations{

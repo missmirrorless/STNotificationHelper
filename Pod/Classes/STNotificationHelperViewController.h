@@ -66,6 +66,12 @@ extern NSString *STNotificationLocalizedString(NSString *localizeString);
 @interface STNotificationHelperViewController : UIViewController
 
 /**
+ @var On dismiss action
+ */
+@property (nonatomic, copy) void (^onDismiss)(void);
+
+
+/**
  Show a view with the steps that the user has to follow to enable the push notifications again.
 
  @param notification information about the app
