@@ -74,9 +74,8 @@ NSString *STNotificationLocalizedString(NSString *localizeString)
 + (instancetype)objectWithTitle:(NSString*)title
                     description:(NSString*)notificationDescription
 {
-    NSBundle *bundle = STNotificationBundle();
-    UIImage *appIcon = [UIImage imageNamed: [[[bundle infoDictionary] objectForKey:@"CFBundleIconFiles"] objectAtIndex:0]];
-    NSString *appName = [[bundle infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    UIImage *appIcon = [UIImage imageNamed: [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIconFiles"] objectAtIndex:0]];
+    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 
     return [self.class.alloc initWithTitle:title description:notificationDescription appIcon:appIcon appName:appName];
 }
@@ -235,9 +234,16 @@ NSString *STNotificationLocalizedString(NSString *localizeString)
 
 -(UIView *)addTapStep:(NSString *)step withIcon:(NSString*)icon atPosition:(NSInteger)position insertUnder:(UIView *)currentStep
 {
-    UIImage *image = [UIImage imageNamed:icon];
+    NSBundle *bundle = [NSBundle mainBundle];
+    
+    if (BundleBlock) {
+        bundle = BundleBlock();
+    }
+    
+    NSString *imagePath = [bundle pathForResource:icon ofType:@"png"];
+    UIImage *image = [[UIImage alloc] initWithContentsOfFile:imagePath];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-
+    
     return [self addTapStep:step withImage:image atPosition:position insertUnder:currentStep];
 }
 
