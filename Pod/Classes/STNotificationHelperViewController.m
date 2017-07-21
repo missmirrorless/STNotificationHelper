@@ -74,8 +74,9 @@ NSString *STNotificationLocalizedString(NSString *localizeString)
 + (instancetype)objectWithTitle:(NSString*)title
                     description:(NSString*)notificationDescription
 {
-    UIImage *appIcon = [UIImage imageNamed: [[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIconFiles"] objectAtIndex:0]];
-    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    NSBundle *bundle = STNotificationBundle();
+    UIImage *appIcon = [UIImage imageNamed: [[[bundle infoDictionary] objectForKey:@"CFBundleIconFiles"] objectAtIndex:0]];
+    NSString *appName = [[bundle infoDictionary] objectForKey:@"CFBundleDisplayName"];
 
     return [self.class.alloc initWithTitle:title description:notificationDescription appIcon:appIcon appName:appName];
 }
