@@ -19,8 +19,8 @@ NSBundle *STNotificationBundle(void) {
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSBundle *bundle = BundleBlock();
-        NSString* path = [bundle.resourcePath stringByAppendingPathComponent:kSTNotificationBundleName];
+        NSBundle *mainBundle = BundleBlock();
+        NSString* path = [mainBundle.resourcePath stringByAppendingPathComponent:kSTNotificationBundleName];
         bundle = [NSBundle bundleWithPath:path];
     });
     return bundle;
